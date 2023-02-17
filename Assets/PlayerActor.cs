@@ -13,18 +13,38 @@ public class PlayerActor : MonoBehaviour
     [SerializeField]
     private bool active;
 
-    [SerializeField] private float maxUpAngle = 80.0f;
-    [SerializeField] private float maxDownAngle = 80.0f;
+    [SerializeField] 
+    private float maxUpAngle = 80.0f;
+    [SerializeField] 
+    private float maxDownAngle = 80.0f;
+
+    
 
 
     private float _rotationX = 0.0f;
     private float _rotationY = 0.0f;
+    public float maxJumpHeight = 4;
+    public float minJumpHeight = 1;
+    public float timeToJumpApex = .4f;
+    [SerializeField]
+    float gravity;
+    [SerializeField]
+    float maxJumpVelocity;
+    [SerializeField]
+    float minJumpVelocity;
+    [SerializeField]
+    Vector3 velocity;
 
     // Start is called before the first frame update
     void Start()
     {
         _controller = GetComponent<CharacterController>();
         _camera.SetActive(active);
+
+
+        gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
     }
 
     // Update is called once per frame
@@ -71,10 +91,32 @@ public class PlayerActor : MonoBehaviour
     }
 
 
+    public void OnJumpInput()
+    {
+        if (_controller.isGrounded)
+        {
+            velocity.y = maxJumpVelocity;
+        }
+    }
+    public void OnJumpInputUp()
+    {
+        if (velocity.y > minJumpVelocity)
+        {
+            velocity.y = minJumpVelocity;
+        }
+    }
+
     public void Move(Vector3 vector)
     {
         vector.x = active ? vector.x : -vector.x;
         _controller.Move(transform.TransformDirection(vector));
+
+        _controller.Move(velocity * Time.deltaTime);
+        if (!_controller.isGrounded)
+        {
+            velocity.y += gravity * Time.deltaTime;
+            velocity.y = Mathf.Clamp(velocity.y, gravity, Mathf.Infinity);
+        }
     }
 
     public void SwapActive()

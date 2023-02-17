@@ -14,8 +14,6 @@ public class playerControler : MonoBehaviour
     private Vector3 _movementInput;
     [SerializeField]
     private float _speed;
-    [SerializeField]
-    private float _jumpForce;
 
 
     [SerializeField] 
@@ -39,11 +37,15 @@ public class playerControler : MonoBehaviour
 
         _input.Player.Jump.performed += ctx =>
         {
-            SwapActive();
-            /*if (_controler1.isGrounded)
-            {
-                _movementInput.y += _jumpForce;
-            }*/
+            _controler1.OnJumpInput();
+            _controler2.OnJumpInput();
+            
+        };
+        _input.Player.Jump.canceled += ctx =>
+        {
+            _controler1.OnJumpInputUp();
+            _controler2.OnJumpInputUp();
+
         };
         _input.Player.Look.performed += ctx =>
         {
