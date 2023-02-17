@@ -2,38 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerActor : MonoBehaviour
+public class PlayerActor : MonoBehaviour, IEnergyHolder
 {
+    private PlayerActor _otherActor;
+    [SerializeField]
+    private LayerMask objectMask;
+
     private CharacterController _controller;
     [SerializeField]
     private Transform _cameraPoint;
     [SerializeField]
     private GameObject _camera;
-
     [SerializeField]
     private bool active;
-
     [SerializeField] 
     private float maxUpAngle = 80.0f;
     [SerializeField] 
     private float maxDownAngle = 80.0f;
-
-    
-
-
     private float _rotationX = 0.0f;
     private float _rotationY = 0.0f;
     public float maxJumpHeight = 4;
     public float minJumpHeight = 1;
     public float timeToJumpApex = .4f;
-    [SerializeField]
-    float gravity;
-    [SerializeField]
-    float maxJumpVelocity;
-    [SerializeField]
-    float minJumpVelocity;
-    [SerializeField]
+    private float gravity;
+    private float maxJumpVelocity;
+    private float minJumpVelocity;
     Vector3 velocity;
+
+    [SerializeField]
+    private int _energyCharges;
+    private int _maxEnergyCharges = 3;
+
+    public int enegry { get { return _energyCharges; } set { _energyCharges = Mathf.Clamp(value, 0, _maxEnergyCharges); }  }
+    public int maxEnegry { get { return _maxEnergyCharges; } set { } }
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +56,65 @@ public class PlayerActor : MonoBehaviour
         
     }
 
+
+    public GameObject GetObjectInfront()
+    {
+        RaycastHit hit;
+        Physics.Raycast(_camera.transform.position, _camera.transform.forward, out hit, Mathf.Infinity);
+        if(hit.collider == null) { return null; }
+        return hit.collider.gameObject;
+    }
+
+
+
+    public void ActionFireEnergy()
+    {
+        if(enegry <= 0) { return; }
+        GameObject gameObject = GetObjectInfront();
+        if (gameObject == null) { return; }
+        if (gameObject == _otherActor.gameObject)
+        {
+            if (!active) { return; }
+            _otherActor.AddEnergy();
+            TakeEnergy();
+            return;
+        }
+        IEnergyHolder energyHolder = gameObject.GetComponent<IEnergyHolder>();
+        if(energyHolder == null) { return; }
+        energyHolder.AddEnergy();
+        TakeEnergy();
+
+    }
+
+    public void ActionTakeEnegry()
+    {
+        if(enegry == maxEnegry) { return; }
+        GameObject gameObject = GetObjectInfront();
+        if(gameObject == null) { return; }
+        if (gameObject == _otherActor.gameObject)
+        {
+            if (!active) { return; }
+            _otherActor.TakeEnergy();
+            AddEnergy();
+            return;
+        }
+        IEnergyHolder energyHolder = gameObject.GetComponent<IEnergyHolder>();
+        if (energyHolder == null) { return; }
+        energyHolder.TakeEnergy();
+        AddEnergy();
+    }
+
+    public void Interact()
+    {
+        GameObject gameObject = GetObjectInfront();
+        if (gameObject == null) { return; }
+        if (gameObject == _otherActor.gameObject) {  PlayerInteract(); return; }
+    }
+
+    private void PlayerInteract()
+    {
+        SwapActive();
+    }
 
     public void Rotate(float rotationX = 0.0f,float rotationY = 0.0f)
     {
@@ -125,4 +187,20 @@ public class PlayerActor : MonoBehaviour
         _camera.SetActive(active);
     }
 
+
+    public void SetOtherActor(PlayerActor actor)
+    {
+        _otherActor = actor;
+    }
+
+    public void AddEnergy()
+    {
+        enegry++;
+        
+    }
+
+    public void TakeEnergy()
+    {
+        enegry--;
+    }
 }

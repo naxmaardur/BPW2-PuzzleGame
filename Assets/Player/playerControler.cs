@@ -24,6 +24,9 @@ public class playerControler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        _controler1.SetOtherActor(_controler2);
+        _controler2.SetOtherActor(_controler1);
         _input = new PlayerInput();
         _input.Player.Move.performed += ctx =>
         {
@@ -61,6 +64,23 @@ public class playerControler : MonoBehaviour
             rotationY = 0;
         };
 
+
+        _input.Player.Fire.performed += ctx =>
+        {
+            _controler1.ActionFireEnergy();
+            _controler2.ActionFireEnergy();
+        };
+        _input.Player.SecondaryFire.performed += ctx =>
+        {
+            _controler1.ActionTakeEnegry();
+            _controler2.ActionTakeEnegry();
+        };
+        _input.Player.Interact.performed += ctx =>
+        {
+            _controler1.Interact();
+            _controler2.Interact();
+        };
+
         _input.Player.Enable();
     }
 
@@ -83,6 +103,8 @@ public class playerControler : MonoBehaviour
         _controler1.Rotate(-rotationX, rotationY);
         _controler2.Rotate(-rotationX, rotationY);
     }
+
+    
 
     
 }
