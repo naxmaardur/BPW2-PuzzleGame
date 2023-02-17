@@ -32,6 +32,8 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     [SerializeField]
     private int _energyCharges;
     private int _maxEnergyCharges = 3;
+    [SerializeField]
+    private GameObject _movingEnergyParticle;
 
     public int enegry { get { return _energyCharges; } set { _energyCharges = Mathf.Clamp(value, 0, _maxEnergyCharges); }  }
     public int maxEnegry { get { return _maxEnergyCharges; } set { } }
@@ -75,15 +77,13 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         if (gameObject == _otherActor.gameObject)
         {
             if (!active) { return; }
-            _otherActor.AddEnergy();
-            TakeEnergy();
-            return;
         }
         IEnergyHolder energyHolder = gameObject.GetComponent<IEnergyHolder>();
         if(energyHolder == null) { return; }
+        if(energyHolder.enegry >= energyHolder.maxEnegry) { return; }
         energyHolder.AddEnergy();
         TakeEnergy();
-
+        SpawnEnergyTransferParticle(gameObject.transform, transform.position);
     }
 
     public void ActionTakeEnegry()
@@ -94,14 +94,19 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         if (gameObject == _otherActor.gameObject)
         {
             if (!active) { return; }
-            _otherActor.TakeEnergy();
-            AddEnergy();
-            return;
         }
         IEnergyHolder energyHolder = gameObject.GetComponent<IEnergyHolder>();
         if (energyHolder == null) { return; }
+        if(energyHolder.enegry == 0) { return; }
         energyHolder.TakeEnergy();
         AddEnergy();
+        SpawnEnergyTransferParticle(transform, gameObject.transform.position);
+    }
+
+    private void SpawnEnergyTransferParticle(Transform parent, Vector3 startingpoint)
+    {
+        GameObject tempObject = Instantiate(_movingEnergyParticle, parent);
+        tempObject.transform.position = startingpoint;
     }
 
     public void Interact()

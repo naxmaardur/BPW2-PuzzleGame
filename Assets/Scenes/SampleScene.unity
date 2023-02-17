@@ -436,6 +436,8 @@ MonoBehaviour:
   maxJumpHeight: 4
   minJumpHeight: 1
   timeToJumpApex: 0.4
+  _energyCharges: 0
+  _movingEnergyParticle: {fileID: 5271001000741797467, guid: 228f6bd64803c4f4d956bb5f4949e410, type: 3}
 --- !u!1 &424615423
 GameObject:
   m_ObjectHideFlags: 3
@@ -744,6 +746,8 @@ MonoBehaviour:
   maxJumpHeight: 4
   minJumpHeight: 1
   timeToJumpApex: 0.4
+  _energyCharges: 1
+  _movingEnergyParticle: {fileID: 5271001000741797467, guid: 228f6bd64803c4f4d956bb5f4949e410, type: 3}
 --- !u!1 &617082621
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,3 +1411,64 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 424615424}
+--- !u!1001 &8608746225909437693
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7221700090594640026, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
+      propertyPath: _energyCharges
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608746226002702510, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608746226002702510, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.6592345
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608746226002702510, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608746226002702510, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.078
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608746226002702510, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608746226002702510, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608746226002702510, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608746226002702510, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608746226002702510, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608746226002702510, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608746226002702510, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608746226002702514, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
+      propertyPath: m_Name
+      value: EnergySwitch
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
