@@ -6,7 +6,7 @@ public class EnergyMaster : MonoBehaviour
 {
     [SerializeField]
     EnergySwitch[] energySwitches;
-    public GameObject target;
+    public GameObject[] targets;
     int totalEnergy;
 
     // Start is called before the first frame update
@@ -28,7 +28,7 @@ public class EnergyMaster : MonoBehaviour
         {
             totalEnergy--;
         }
-        if (totalEnergy >= energySwitches.Length - 1)
+        if (totalEnergy >= energySwitches.Length)
         {
             Activate(true);
             return;
@@ -39,7 +39,11 @@ public class EnergyMaster : MonoBehaviour
 
     void Activate(bool b)
     {
-        target.SendMessage("SetActiveState", b);
+        Debug.Log(b);
+        foreach (GameObject target in targets)
+        {
+            target.SendMessage("SetActiveState", b);
+        }
     }
 
     // Update is called once per frame
