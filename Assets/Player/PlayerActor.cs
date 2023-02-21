@@ -34,6 +34,9 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     private int _maxEnergyCharges = 3;
     [SerializeField]
     private GameObject _movingEnergyParticle;
+    [SerializeField]
+    private GameObject[] _enegryChargeVisuals;
+
 
     public int enegry { get { return _energyCharges; } set { _energyCharges = Mathf.Clamp(value, 0, _maxEnergyCharges); }  }
     public int maxEnegry { get { return _maxEnergyCharges; } set { } }
@@ -50,6 +53,7 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
+        RedefineEnergyVisuals();
     }
 
     // Update is called once per frame
@@ -201,11 +205,27 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     public void AddEnergy()
     {
         enegry++;
-        
+        RedefineEnergyVisuals();
     }
 
     public void TakeEnergy()
     {
         enegry--;
+        RedefineEnergyVisuals();
+    }
+
+    private void RedefineEnergyVisuals()
+    {
+        for (int i = 0; i < _enegryChargeVisuals.Length; i++)
+        {
+            if (enegry >= i+1)
+            {
+                _enegryChargeVisuals[i].SetActive(true);
+            }
+            else
+            {
+                _enegryChargeVisuals[i].SetActive(false);
+            }
+        }
     }
 }
