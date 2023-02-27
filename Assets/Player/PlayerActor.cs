@@ -37,7 +37,7 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     [SerializeField]
     private GameObject[] _enegryChargeVisuals;
 
-
+    public bool canJump;
     public int enegry { get { return _energyCharges; } set { _energyCharges = Mathf.Clamp(value, 0, _maxEnergyCharges); }  }
     public int maxEnegry { get { return _maxEnergyCharges; } set { } }
 
@@ -164,7 +164,7 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
 
     public void OnJumpInput()
     {
-        if (_controller.isGrounded)
+        if (_controller.isGrounded && canJump)
         {
             velocity.y = maxJumpVelocity;
         }
