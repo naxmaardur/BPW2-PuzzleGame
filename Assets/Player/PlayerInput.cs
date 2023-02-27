@@ -107,6 +107,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShowOther"",
+                    ""type"": ""Button"",
+                    ""id"": ""b31697a7-1054-496d-8486-082fd1f7a573"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -459,6 +468,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9f4bf7ed-bddb-4dea-9362-106ecb2bc6fb"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ShowOther"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9af8bb06-da3d-4cc2-a007-a552047045f7"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ShowOther"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1086,6 +1117,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_SecondaryFire = m_Player.FindAction("SecondaryFire", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_ShowOther = m_Player.FindAction("ShowOther", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1167,6 +1199,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_SecondaryFire;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_ShowOther;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -1180,6 +1213,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @SecondaryFire => m_Wrapper.m_Player_SecondaryFire;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @ShowOther => m_Wrapper.m_Player_ShowOther;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1216,6 +1250,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @ShowOther.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowOther;
+                @ShowOther.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowOther;
+                @ShowOther.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowOther;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1247,6 +1284,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @ShowOther.started += instance.OnShowOther;
+                @ShowOther.performed += instance.OnShowOther;
+                @ShowOther.canceled += instance.OnShowOther;
             }
         }
     }
@@ -1420,6 +1460,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnSecondaryFire(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnShowOther(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

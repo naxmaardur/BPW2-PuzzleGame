@@ -81,6 +81,18 @@ public class playerControler : MonoBehaviour
             _controler2.Interact();
         };
 
+        _input.Player.ShowOther.performed += ctx =>
+        {
+            _controler1.ShowOtherSideView(true);
+            _controler2.ShowOtherSideView(true);
+        };
+
+        _input.Player.ShowOther.canceled += ctx =>
+        {
+            _controler1.ShowOtherSideView(false);
+            _controler2.ShowOtherSideView(false);
+        };
+
         _input.Player.Enable();
     }
 

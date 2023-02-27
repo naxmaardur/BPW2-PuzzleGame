@@ -5,6 +5,9 @@ using UnityEngine;
 public class DoorScript : MonoBehaviour
 {
     Animator _animator;
+    [SerializeField]
+    bool _closedOnActive;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +19,10 @@ public class DoorScript : MonoBehaviour
 
     public void SetActiveState(bool b)
     {
+        if (_closedOnActive)
+        {
+            b = !b;
+        }
         _animator.SetBool("Open", b);
     }
 }

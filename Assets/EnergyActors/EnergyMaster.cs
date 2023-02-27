@@ -10,7 +10,7 @@ public class EnergyMaster : MonoBehaviour
     int totalEnergy;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         foreach (EnergySwitch energySwitch in energySwitches)
         {

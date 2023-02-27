@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PlayerActor : MonoBehaviour, IEnergyHolder
 {
+    public float speed;
     private PlayerActor _otherActor;
+    [SerializeField]
+    private GameObject _otherActorVisuals;
     [SerializeField]
     private LayerMask objectMask;
 
@@ -37,7 +40,10 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     [SerializeField]
     private GameObject[] _enegryChargeVisuals;
 
+
+
     public bool canJump;
+    private bool _canShoot = true;
     public int enegry { get { return _energyCharges; } set { _energyCharges = Mathf.Clamp(value, 0, _maxEnergyCharges); }  }
     public int maxEnegry { get { return _maxEnergyCharges; } set { } }
 
@@ -62,6 +68,11 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         
     }
 
+    public void ShowOtherSideView(bool b)
+    {
+        _otherActorVisuals.SetActive(b);
+    }
+
 
     public GameObject GetObjectInfront()
     {
@@ -75,6 +86,7 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
 
     public void ActionFireEnergy()
     {
+        if(!_canShoot) { return; }
         if(enegry <= 0) { return; }
         GameObject gameObject = GetObjectInfront();
         if (gameObject == null) { return; }
@@ -92,6 +104,7 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
 
     public void ActionTakeEnegry()
     {
+        if(!_canShoot) { return; }
         if(enegry == maxEnegry) { return; }
         GameObject gameObject = GetObjectInfront();
         if(gameObject == null) { return; }
@@ -180,7 +193,7 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     public void Move(Vector3 vector)
     {
         vector.x = active ? vector.x : -vector.x;
-        _controller.Move(transform.TransformDirection(vector));
+        _controller.Move(transform.TransformDirection(vector) * Time.deltaTime * speed );
 
         _controller.Move(velocity * Time.deltaTime);
         if (!_controller.isGrounded)
@@ -227,5 +240,11 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
                 _enegryChargeVisuals[i].SetActive(false);
             }
         }
+    }
+
+
+    public void SetCanShoot(bool b)
+    {
+        _canShoot = b;
     }
 }

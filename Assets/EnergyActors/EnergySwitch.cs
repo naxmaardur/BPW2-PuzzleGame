@@ -10,6 +10,9 @@ public class EnergySwitch : MonoBehaviour, IEnergyHolder
     [SerializeField]
     private GameObject _activeParticle;
 
+    public bool startActive;
+
+
     public int enegry { get { return _energyCharges; } set { _energyCharges = Mathf.Clamp(value, 0, _maxEnergyCharges); OnEnergyChanged(value); } }
     public int maxEnegry { get { return _maxEnergyCharges; } set { } }
 
@@ -42,6 +45,11 @@ public class EnergySwitch : MonoBehaviour, IEnergyHolder
     void Start()
     {
         OnEnergyChanged += EnergyChanged;
+        EnergyChanged(_energyCharges);
+        if (startActive)
+        {
+            AddEnergy();
+        }
     }
 
     // Update is called once per frame
