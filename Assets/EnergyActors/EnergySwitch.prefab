@@ -46,8 +46,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 0.53929996}
+  m_Center: {x: 0, y: 0, z: -0.43381786}
 --- !u!114 &7221700090594640026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,6 +62,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _energyCharges: 0
   _activeParticle: {fileID: 8610525362146084235}
+  startActive: 0
 --- !u!1001 &374688064829186553
 PrefabInstance:
   m_ObjectHideFlags: 0

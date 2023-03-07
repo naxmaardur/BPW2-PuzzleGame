@@ -8,6 +8,9 @@ public class BothActorsCheck : MonoBehaviour
     public GameObject[] targets;
     private int _targetsInside;
 
+    bool _HasTriggered;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +26,7 @@ public class BothActorsCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (_HasTriggered) { return; }
         PlayerActor p;
         if (other.TryGetComponent<PlayerActor>(out p))
         {
@@ -32,6 +36,7 @@ public class BothActorsCheck : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        if(_HasTriggered) { return; }
         PlayerActor p;
         if (other.TryGetComponent<PlayerActor>(out p))
         {
@@ -42,23 +47,20 @@ public class BothActorsCheck : MonoBehaviour
 
     void InsideUpdated(int count)
     {
-        if(count == 2)
+        if (_HasTriggered) { return; }
+        if (count == 2)
         {
-            Activate(true);
-        }
-        else
-        {
-            Activate(false);
+            Trigger();
         }
     }
 
 
-    void Activate(bool b)
+    void Trigger()
     {
-        Debug.Log(b);
+        _HasTriggered = true;
         foreach (GameObject target in targets)
         {
-            target.SendMessage("SetActiveState", b);
+            target.SendMessage("SwapActiveState");
         }
     }
 }

@@ -8,6 +8,8 @@ public class DoorScript : MonoBehaviour
     [SerializeField]
     bool _closedOnActive;
 
+    bool _IsOpen;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,12 +19,19 @@ public class DoorScript : MonoBehaviour
 
 
 
+    public void SwapActiveState()
+    {
+        _IsOpen = !_IsOpen;
+        _animator.SetBool("Open", _IsOpen);
+    }
+
     public void SetActiveState(bool b)
     {
         if (_closedOnActive)
         {
             b = !b;
         }
+        _IsOpen = b;
         _animator.SetBool("Open", b);
     }
 }
