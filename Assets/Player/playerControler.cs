@@ -25,7 +25,9 @@ public class playerControler : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        _controler1.SetControlerScript(this);
         _controler1.SetOtherActor(_controler2);
+        _controler2.SetControlerScript(this);
         _controler2.SetOtherActor(_controler1);
         _input = new PlayerInput();
         _input.Player.Move.performed += ctx =>
@@ -104,7 +106,7 @@ public class playerControler : MonoBehaviour
         _controler2.Move(_movementInput);
     }
 
-    private void SwapActive()
+    public void SwapActive()
     {
         _controler1.SwapActive();
         _controler2.SwapActive();

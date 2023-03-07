@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerActor : MonoBehaviour, IEnergyHolder
 {
     public float speed;
+    private playerControler _playerControler;
     private PlayerActor _otherActor;
     [SerializeField]
     private GameObject _otherActorVisuals;
@@ -128,6 +129,7 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
 
     public void Interact()
     {
+        if(!active) { return; }
         GameObject gameObject = GetObjectInfront();
         if (gameObject == null) { return; }
         if (gameObject == _otherActor.gameObject) {  PlayerInteract(); return; }
@@ -135,7 +137,7 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
 
     private void PlayerInteract()
     {
-        SwapActive();
+        _playerControler.SwapActive();
     }
 
     public void Rotate(float rotationX = 0.0f,float rotationY = 0.0f)
@@ -213,6 +215,10 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     public void SetOtherActor(PlayerActor actor)
     {
         _otherActor = actor;
+    }
+    public void SetControlerScript(playerControler controler)
+    {
+        _playerControler = controler;
     }
 
     public void AddEnergy()
