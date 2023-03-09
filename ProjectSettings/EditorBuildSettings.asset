@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: 2c901da5856a95b4f98fd4eda735f746
+  - enabled: 1
+    path: Assets/Scenes/AlternatingPuzzle.unity
+    guid: c009064941b03a641a6b527f7c895b7a
   m_configObjects: {}

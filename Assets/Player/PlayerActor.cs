@@ -18,7 +18,8 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     [SerializeField]
     private GameObject _camera;
     [SerializeField]
-    private bool active;
+    private bool _active;
+    public bool Active { get { return _active; } }
     [SerializeField] 
     private float maxUpAngle = 80.0f;
     [SerializeField] 
@@ -31,7 +32,14 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     private float gravity;
     private float maxJumpVelocity;
     private float minJumpVelocity;
-    Vector3 velocity;
+    private Vector3 velocity;
+    [SerializeField]
+    private GameObject _leftImage;
+    [SerializeField]
+    private GameObject _rightImage;
+    [SerializeField]
+    private GameObject _SwapImage;
+
 
     [SerializeField]
     private int _energyCharges;
@@ -48,13 +56,16 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     public int enegry { get { return _energyCharges; } set { _energyCharges = Mathf.Clamp(value, 0, _maxEnergyCharges); }  }
     public int maxEnegry { get { return _maxEnergyCharges; } set { } }
 
+    public GameObject LastHoverObject;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+       
         _controller = GetComponent<CharacterController>();
-        _camera.SetActive(active);
+        _camera.SetActive(_active);
 
 
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
@@ -66,7 +77,16 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     // Update is called once per frame
     void Update()
     {
-        
+        HoverUpdate();
+    }
+
+    void HoverUpdate()
+    {
+        if(!_active) { return; }
+        GameObject gameObject = GetObjectInfront();
+        if(gameObject != LastHoverObject && LastHoverObject != null) { LastHoverObject.SendMessage("OnHoverEnd", SendMessageOptions.DontRequireReceiver); }
+        LastHoverObject = gameObject;
+        LastHoverObject.SendMessage("OnHover", enegry, SendMessageOptions.DontRequireReceiver);
     }
 
     public void ShowOtherSideView(bool b)
@@ -93,7 +113,7 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         if (gameObject == null) { return; }
         if (gameObject == _otherActor.gameObject)
         {
-            if (!active) { return; }
+            if (!_active) { return; }
         }
         IEnergyHolder energyHolder = gameObject.GetComponent<IEnergyHolder>();
         if(energyHolder == null) { return; }
@@ -111,7 +131,7 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         if(gameObject == null) { return; }
         if (gameObject == _otherActor.gameObject)
         {
-            if (!active) { return; }
+            if (!_active) { return; }
         }
         IEnergyHolder energyHolder = gameObject.GetComponent<IEnergyHolder>();
         if (energyHolder == null) { return; }
@@ -127,12 +147,45 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         tempObject.transform.position = startingpoint;
     }
 
+    void OnHover(int charges)
+    {
+        if (_active) { return; }
+        if (charges > 0 && _energyCharges < maxEnegry)
+        {
+            _leftImage.SetActive(true);
+        }
+        else
+        {
+            _leftImage.SetActive(false);
+        }
+
+        if (charges < 3 && _energyCharges != 0)
+        {
+            _rightImage.SetActive(true);
+        }
+        else
+        {
+            _rightImage.SetActive(false);
+        }
+
+
+        _SwapImage.SetActive(true);
+    }
+
+    void OnHoverEnd()
+    {
+        _leftImage.SetActive(false);
+        _rightImage.SetActive(false);
+        _SwapImage.SetActive(false);
+    }
+
     public void Interact()
     {
-        if(!active) { return; }
+        if(!_active) { return; }
         GameObject gameObject = GetObjectInfront();
         if (gameObject == null) { return; }
         if (gameObject == _otherActor.gameObject) {  PlayerInteract(); return; }
+       // PlayerInteract();
     }
 
     private void PlayerInteract()
@@ -143,7 +196,7 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     public void Rotate(float rotationX = 0.0f,float rotationY = 0.0f)
     {
         _rotationX += rotationX;
-        _rotationY += active?rotationY:-rotationY;
+        _rotationY += _active?rotationY:-rotationY;
         transform.localRotation = Quaternion.Euler(0, _rotationY, 0.0f);
         Quaternion cameraRotation = Quaternion.Euler(_rotationX,0,0);
         Quaternion clampedRotation = ClampRotation(cameraRotation);
@@ -194,7 +247,7 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
 
     public void Move(Vector3 vector)
     {
-        vector.x = active ? vector.x : -vector.x;
+        vector.x = _active ? vector.x : -vector.x;
         _controller.Move(transform.TransformDirection(vector) * Time.deltaTime * speed );
 
         _controller.Move(velocity * Time.deltaTime);
@@ -207,8 +260,8 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
 
     public void SwapActive()
     {
-        active = !active;
-        _camera.SetActive(active);
+        _active = !_active;
+        _camera.SetActive(_active);
     }
 
 

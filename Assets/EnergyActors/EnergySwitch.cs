@@ -9,6 +9,11 @@ public class EnergySwitch : MonoBehaviour, IEnergyHolder
     private int _maxEnergyCharges = 1;
     [SerializeField]
     private GameObject _activeParticle;
+    [SerializeField]
+    private GameObject _leftImage;
+    [SerializeField]
+    private GameObject _rightImage;
+
 
     public bool startActive;
 
@@ -56,5 +61,32 @@ public class EnergySwitch : MonoBehaviour, IEnergyHolder
     void Update()
     {
         
+    }
+
+
+    void OnHover(int charges)
+    {
+        if(charges > 0 && _energyCharges < maxEnegry)
+        {
+            _leftImage.SetActive(true);
+        }
+        else
+        {
+            _leftImage.SetActive(false);
+        }
+
+        if(charges < 3 && _energyCharges != 0){
+            _rightImage.SetActive(true);
+        }
+        else
+        {
+            _rightImage.SetActive(false);
+        }
+    }
+
+    void OnHoverEnd()
+    {
+        _leftImage.SetActive(false);
+        _rightImage.SetActive(false);
     }
 }

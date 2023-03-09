@@ -8,6 +8,9 @@ public class EnergyMaster : MonoBehaviour
     EnergySwitch[] energySwitches;
     public GameObject[] targets;
     int totalEnergy;
+    [SerializeField]
+    private EnergyDisplay[] _energyDisplays;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -27,6 +30,10 @@ public class EnergyMaster : MonoBehaviour
         else
         {
             totalEnergy--;
+        }
+        foreach(EnergyDisplay display in _energyDisplays)
+        {
+            display.UpdateLights(totalEnergy);
         }
         if (totalEnergy >= energySwitches.Length)
         {

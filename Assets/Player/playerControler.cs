@@ -79,8 +79,14 @@ public class playerControler : MonoBehaviour
         };
         _input.Player.Interact.performed += ctx =>
         {
-            _controler1.Interact();
-            _controler2.Interact();
+            if (_controler1.Active)
+            {
+                _controler1.Interact();
+            }
+            else
+            {
+                _controler2.Interact();
+            }
         };
 
         _input.Player.ShowOther.performed += ctx =>
