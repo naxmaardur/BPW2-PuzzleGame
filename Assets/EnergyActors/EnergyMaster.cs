@@ -10,6 +10,8 @@ public class EnergyMaster : MonoBehaviour
     int totalEnergy;
     [SerializeField]
     private EnergyDisplay[] _energyDisplays;
+    public bool overwriteEnergyNeeded;
+    public float energyNeededOverwriteValue;
 
 
     // Start is called before the first frame update
@@ -36,6 +38,11 @@ public class EnergyMaster : MonoBehaviour
             display.UpdateLights(totalEnergy);
         }
         if (totalEnergy >= energySwitches.Length)
+        {
+            Activate(true);
+            return;
+        }
+        if(overwriteEnergyNeeded && totalEnergy >= energyNeededOverwriteValue)
         {
             Activate(true);
             return;
