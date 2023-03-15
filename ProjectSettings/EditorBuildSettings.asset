@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AlternatingPuzzle.unity
     guid: c009064941b03a641a6b527f7c895b7a
+  - enabled: 1
+    path: Assets/Scenes/AlternatingPuzzle 1.unity
+    guid: 04ec2aaf42ada9e4eb90a6a6207f7b70
   m_configObjects: {}
