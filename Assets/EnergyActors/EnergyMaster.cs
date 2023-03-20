@@ -12,11 +12,13 @@ public class EnergyMaster : MonoBehaviour
     private EnergyDisplay[] _energyDisplays;
     public bool overwriteEnergyNeeded;
     public float energyNeededOverwriteValue;
+    private AudioSource _source;
 
 
     // Start is called before the first frame update
     void Awake()
     {
+        _source = GetComponent<AudioSource>();
         foreach (EnergySwitch energySwitch in energySwitches)
         {
             energySwitch.OnEnergyChanged += OnEnergyChanged;
@@ -40,11 +42,13 @@ public class EnergyMaster : MonoBehaviour
         if (totalEnergy >= energySwitches.Length)
         {
             Activate(true);
+            _source.Play();
             return;
         }
         if(overwriteEnergyNeeded && totalEnergy >= energyNeededOverwriteValue)
         {
             Activate(true);
+            _source.Play();
             return;
         }
         Activate(false);

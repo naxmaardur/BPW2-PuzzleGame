@@ -21,9 +21,18 @@ public class playerControler : MonoBehaviour
 
     private float rotationX = 0.0f;
     private float rotationY = 0.0f;
+
+    private AudioSource _source;
+
+    [SerializeField]
+    private AudioClip _SwitchClip;
+    [SerializeField]
+    private AudioClip _OpenSideViewClip;
+
     // Start is called before the first frame update
     void Start()
     {
+        _source = GetComponent<AudioSource>();
         Cursor.lockState = CursorLockMode.Locked;
         _controler1.SetControlerScript(this);
         _controler1.SetOtherActor(_controler2);
@@ -81,11 +90,19 @@ public class playerControler : MonoBehaviour
         {
             if (_controler1.Active)
             {
-                _controler1.Interact();
+                if (_controler1.Interact())
+                {
+                    _source.clip = _SwitchClip;
+                    _source.Play();
+                }
             }
             else
             {
-                _controler2.Interact();
+                if (_controler2.Interact())
+                {
+                    _source.clip = _SwitchClip;
+                    _source.Play();
+                }
             }
         };
 
@@ -93,6 +110,8 @@ public class playerControler : MonoBehaviour
         {
             _controler1.ShowOtherSideView(true);
             _controler2.ShowOtherSideView(true);
+            _source.clip = _OpenSideViewClip;
+            _source.Play();
         };
 
         _input.Player.ShowOther.canceled += ctx =>

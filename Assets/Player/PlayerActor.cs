@@ -57,13 +57,20 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     public int maxEnegry { get { return _maxEnergyCharges; } set { } }
 
     public GameObject LastHoverObject;
+    private AudioSource _source;
+
+    [SerializeField]
+    private AudioClip _fireClip;
+    [SerializeField]
+    private AudioClip _TakeClip;
+    
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-       
+        _source = GetComponent<AudioSource>();
         _controller = GetComponent<CharacterController>();
         _camera.SetActive(_active);
 
@@ -121,6 +128,8 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         energyHolder.AddEnergy();
         TakeEnergy();
         SpawnEnergyTransferParticle(gameObject.transform, transform.position);
+        _source.clip = _fireClip;
+        _source.Play();
     }
 
     public void ActionTakeEnegry()
@@ -139,6 +148,8 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         energyHolder.TakeEnergy();
         AddEnergy();
         SpawnEnergyTransferParticle(transform, gameObject.transform.position);
+        _source.clip = _TakeClip;
+        _source.Play();
     }
 
     private void SpawnEnergyTransferParticle(Transform parent, Vector3 startingpoint)
@@ -179,12 +190,13 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         _SwapImage.SetActive(false);
     }
 
-    public void Interact()
+    public bool Interact()
     {
-        if(!_active) { return; }
+        if(!_active) { return false; }
         GameObject gameObject = GetObjectInfront();
-        if (gameObject == null) { return; }
-        if (gameObject == _otherActor.gameObject) {  PlayerInteract(); return; }
+        if (gameObject == null) { return false; }
+        if (gameObject == _otherActor.gameObject) {  PlayerInteract(); return true; }
+        return false;
        // PlayerInteract();
     }
 
