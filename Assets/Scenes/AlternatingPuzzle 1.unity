@@ -6668,10 +6668,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9704e7018857b9c44b612b4f23dde9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySwitches:
-  - {fileID: 608051620}
+  _energySwitches:
   - {fileID: 404261257}
-  targets:
+  - {fileID: 608051620}
+  _targets:
   - {fileID: 2025249668}
   - {fileID: 1206669490}
   _energyDisplays:
@@ -6691,18 +6691,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9704e7018857b9c44b612b4f23dde9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySwitches:
+  _energySwitches:
   - {fileID: 79395141}
   - {fileID: 1065551125}
-  targets:
-  - {fileID: 1621486656}
-  - {fileID: 1418185094}
-  - {fileID: 98759719}
-  - {fileID: 1071387828}
+  _targets:
   - {fileID: 1167995140}
   - {fileID: 276314519}
   - {fileID: 1583127326}
   - {fileID: 2073048327}
+  - {fileID: 1621486656}
+  - {fileID: 1418185094}
+  - {fileID: 98759719}
+  - {fileID: 1071387828}
   _energyDisplays:
   - {fileID: 1004434564}
   - {fileID: 622609636}

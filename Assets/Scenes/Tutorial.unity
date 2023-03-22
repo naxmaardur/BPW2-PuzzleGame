@@ -2473,9 +2473,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9704e7018857b9c44b612b4f23dde9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySwitches:
+  _energySwitches:
   - {fileID: 234582112}
-  targets:
+  _targets:
   - {fileID: 1981710901}
   _energyDisplays:
   - {fileID: 256953865}
@@ -3407,9 +3407,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9704e7018857b9c44b612b4f23dde9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySwitches:
+  _energySwitches:
   - {fileID: 1737441458}
-  targets:
+  _targets:
   - {fileID: 375412462}
   - {fileID: 1510747580}
   _energyDisplays:
@@ -3938,6 +3938,10 @@ PrefabInstance:
     - target: {fileID: 8608746226002702514, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
       propertyPath: m_Name
       value: EnergySwitch (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9043547145469949581, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
@@ -4479,6 +4483,10 @@ PrefabInstance:
     - target: {fileID: 8608746226002702514, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
       propertyPath: m_Name
       value: EnergySwitch (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9043547145469949581, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d90bc4bcfc0566548b708fc8cd0f10ed, type: 3}
@@ -5081,12 +5089,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9704e7018857b9c44b612b4f23dde9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySwitches:
+  _energySwitches:
   - {fileID: 234582112}
   - {fileID: 1830254804}
-  targets:
-  - {fileID: 1353382513}
+  _targets:
   - {fileID: 1394791315}
+  - {fileID: 1353382513}
   _energyDisplays:
   - {fileID: 702363247}
   - {fileID: 1475630422}
@@ -5801,10 +5809,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9704e7018857b9c44b612b4f23dde9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySwitches:
-  - {fileID: 1084443512}
+  _energySwitches:
   - {fileID: 1563082092}
-  targets:
+  - {fileID: 1084443512}
+  _targets:
   - {fileID: 1618726486}
   - {fileID: 831107024}
   _energyDisplays:

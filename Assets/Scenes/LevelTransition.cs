@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class LevelTransition : MonoBehaviour
 {
-
-    [SerializeField] private int _targetSceneIndex;
+    [SerializeField] 
+    private int _targetSceneIndex;
     private int _targetsInside;
-
 
     private void OnTriggerEnter(Collider other)
     {
@@ -18,6 +17,7 @@ public class LevelTransition : MonoBehaviour
             InsideUpdated(_targetsInside);
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         PlayerActor p;
@@ -34,7 +34,6 @@ public class LevelTransition : MonoBehaviour
             LoadLevel();
         }
     }
-
 
     public void LoadLevel()
     {

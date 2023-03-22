@@ -13,14 +13,9 @@ public class EnergySwitch : MonoBehaviour, IEnergyHolder
     private GameObject _leftImage;
     [SerializeField]
     private GameObject _rightImage;
-
-
     public bool startActive;
-
-
     public int enegry { get { return _energyCharges; } set { _energyCharges = Mathf.Clamp(value, 0, _maxEnergyCharges); OnEnergyChanged(value); } }
     public int maxEnegry { get { return _maxEnergyCharges; } set { } }
-
     public delegate void EnergyChangedEvent(int value);
     public EnergyChangedEvent OnEnergyChanged;
 
@@ -57,13 +52,6 @@ public class EnergySwitch : MonoBehaviour, IEnergyHolder
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
     void OnHover(int charges)
     {
         if(charges > 0 && _energyCharges < maxEnegry)
@@ -83,7 +71,6 @@ public class EnergySwitch : MonoBehaviour, IEnergyHolder
             _rightImage.SetActive(false);
         }
     }
-
     void OnHoverEnd()
     {
         _leftImage.SetActive(false);

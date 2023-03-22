@@ -4,25 +4,9 @@ using UnityEngine;
 
 public class BothActorsCheck : MonoBehaviour
 {
-
     public GameObject[] targets;
     private int _targetsInside;
-
     bool _HasTriggered;
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -34,6 +18,7 @@ public class BothActorsCheck : MonoBehaviour
             InsideUpdated(_targetsInside);
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         if(_HasTriggered) { return; }
@@ -53,7 +38,6 @@ public class BothActorsCheck : MonoBehaviour
             Trigger();
         }
     }
-
 
     void Trigger()
     {

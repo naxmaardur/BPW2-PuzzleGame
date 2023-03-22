@@ -10,20 +10,14 @@ public class playerControler : MonoBehaviour
     [SerializeField]
     private PlayerActor _controler2;
     private PlayerInput _input;
-
     private Vector3 _movementInput;
     [SerializeField]
     private float _speed;
-
-
     [SerializeField] 
-    private float sensitivity = 5.0f;
-
-    private float rotationX = 0.0f;
-    private float rotationY = 0.0f;
-
+    private float _sensitivity = 5.0f;
+    private float _rotationX = 0.0f;
+    private float _rotationY = 0.0f;
     private AudioSource _source;
-
     [SerializeField]
     private AudioClip _SwitchClip;
     [SerializeField]
@@ -48,7 +42,6 @@ public class playerControler : MonoBehaviour
         {
             _movementInput = new Vector3(0,_movementInput.y, 0);
         };
-
         _input.Player.Jump.performed += ctx =>
         {
             _controler1.OnJumpInput();
@@ -64,18 +57,15 @@ public class playerControler : MonoBehaviour
         _input.Player.Look.performed += ctx =>
         {
             Vector2 lookDelta = ctx.ReadValue<Vector2>();
-            rotationX += lookDelta.y * sensitivity;
-            rotationY += lookDelta.x * sensitivity;
+            _rotationX += lookDelta.y * _sensitivity;
+            _rotationY += lookDelta.x * _sensitivity;
 
         };
-
         _input.Player.Look.canceled += ctx =>
         {
-            rotationX = 0;
-            rotationY = 0;
+            _rotationX = 0;
+            _rotationY = 0;
         };
-
-
         _input.Player.Fire.performed += ctx =>
         {
             _controler1.ActionFireEnergy();
@@ -105,7 +95,6 @@ public class playerControler : MonoBehaviour
                 }
             }
         };
-
         _input.Player.ShowOther.performed += ctx =>
         {
             _controler1.ShowOtherSideView(true);
@@ -113,13 +102,11 @@ public class playerControler : MonoBehaviour
             _source.clip = _OpenSideViewClip;
             _source.Play();
         };
-
         _input.Player.ShowOther.canceled += ctx =>
         {
             _controler1.ShowOtherSideView(false);
             _controler2.ShowOtherSideView(false);
         };
-
         _input.Player.Enable();
     }
 
@@ -139,11 +126,13 @@ public class playerControler : MonoBehaviour
 
     private void HandelCameraAndRotation()
     {
-        _controler1.Rotate(-rotationX, rotationY);
-        _controler2.Rotate(-rotationX, rotationY);
+        _controler1.Rotate(-_rotationX, _rotationY);
+        _controler2.Rotate(-_rotationX, _rotationY);
     }
 
-    
-
-    
+    private void OnDisable()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        _input.Player.Disable();
+    }
 }

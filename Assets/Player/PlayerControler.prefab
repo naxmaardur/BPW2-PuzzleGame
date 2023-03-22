@@ -48,7 +48,7 @@ MonoBehaviour:
   _controler1: {fileID: 0}
   _controler2: {fileID: 0}
   _speed: 0.01
-  sensitivity: 0.2
+  _sensitivity: 0.3
   _SwitchClip: {fileID: 8300000, guid: f90b732de4e0b4741b82c191b1c35782, type: 3}
   _OpenSideViewClip: {fileID: 8300000, guid: 60ade0fdab5494643bcda61d2c8bcc62, type: 3}
 --- !u!82 &695999016519078268

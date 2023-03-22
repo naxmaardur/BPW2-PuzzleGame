@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class ScaleWithDistance : MonoBehaviour
 {
-   
-
-    // Update is called once per frame
     void Update()
     {
         transform.localScale = (Vector3.one /6) * Vector3.Distance(transform.position, Camera.main.transform.position);
+        if(transform.localScale.x > 2)
+        {
+            transform.localScale = new Vector3(2, 2, 2);
+        }
     }
 }

@@ -21,8 +21,5 @@ public class EnergyDisplay : MonoBehaviour
                 _ligts[x].color = Color.red;
             }
         }
-
-
     }
-
 }

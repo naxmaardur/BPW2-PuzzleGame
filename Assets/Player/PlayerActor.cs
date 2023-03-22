@@ -10,8 +10,7 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     [SerializeField]
     private GameObject _otherActorVisuals;
     [SerializeField]
-    private LayerMask objectMask;
-
+    private LayerMask _objectMask;
     private CharacterController _controller;
     [SerializeField]
     private Transform _cameraPoint;
@@ -21,26 +20,24 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     private bool _active;
     public bool Active { get { return _active; } }
     [SerializeField] 
-    private float maxUpAngle = 80.0f;
+    private float _maxUpAngle = 80.0f;
     [SerializeField] 
-    private float maxDownAngle = 80.0f;
+    private float _maxDownAngle = 80.0f;
     private float _rotationX = 0.0f;
     private float _rotationY = 0.0f;
     public float maxJumpHeight = 4;
     public float minJumpHeight = 1;
     public float timeToJumpApex = .4f;
-    private float gravity;
-    private float maxJumpVelocity;
-    private float minJumpVelocity;
-    private Vector3 velocity;
+    private float _gravity;
+    private float _maxJumpVelocity;
+    private float _minJumpVelocity;
+    private Vector3 _velocity;
     [SerializeField]
     private GameObject _leftImage;
     [SerializeField]
     private GameObject _rightImage;
     [SerializeField]
     private GameObject _SwapImage;
-
-
     [SerializeField]
     private int _energyCharges;
     private int _maxEnergyCharges = 3;
@@ -48,24 +45,16 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     private GameObject _movingEnergyParticle;
     [SerializeField]
     private GameObject[] _enegryChargeVisuals;
-
-
-
     public bool canJump;
     private bool _canShoot = true;
     public int enegry { get { return _energyCharges; } set { _energyCharges = Mathf.Clamp(value, 0, _maxEnergyCharges); }  }
     public int maxEnegry { get { return _maxEnergyCharges; } set { } }
-
     public GameObject LastHoverObject;
     private AudioSource _source;
-
     [SerializeField]
     private AudioClip _fireClip;
     [SerializeField]
     private AudioClip _TakeClip;
-    
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -73,11 +62,9 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         _source = GetComponent<AudioSource>();
         _controller = GetComponent<CharacterController>();
         _camera.SetActive(_active);
-
-
-        gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
-        maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
-        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
+        _gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        _maxJumpVelocity = Mathf.Abs(_gravity) * timeToJumpApex;
+        _minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(_gravity) * minJumpHeight);
         RedefineEnergyVisuals();
     }
 
@@ -89,8 +76,10 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
 
     void HoverUpdate()
     {
-        if(!_active) { return; }
+        //if(!_active) { return; }
         GameObject gameObject = GetObjectInfront();
+        if(gameObject != null && LastHoverObject != null && !_canShoot) { LastHoverObject.SendMessage("OnHoverEnd", SendMessageOptions.DontRequireReceiver); return; }
+        if (!_canShoot) { return; }
         if(gameObject != LastHoverObject && LastHoverObject != null) { LastHoverObject.SendMessage("OnHoverEnd", SendMessageOptions.DontRequireReceiver); }
         LastHoverObject = gameObject;
         LastHoverObject.SendMessage("OnHover", enegry, SendMessageOptions.DontRequireReceiver);
@@ -101,7 +90,6 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         _otherActorVisuals.SetActive(b);
     }
 
-
     public GameObject GetObjectInfront()
     {
         RaycastHit hit;
@@ -109,8 +97,6 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         if(hit.collider == null) { return null; }
         return hit.collider.gameObject;
     }
-
-
 
     public void ActionFireEnergy()
     {
@@ -178,8 +164,6 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         {
             _rightImage.SetActive(false);
         }
-
-
         _SwapImage.SetActive(true);
     }
 
@@ -204,7 +188,6 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     {
         _playerControler.SwapActive();
     }
-
     public void Rotate(float rotationX = 0.0f,float rotationY = 0.0f)
     {
         _rotationX += rotationX;
@@ -223,7 +206,7 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     {
         // Clamp the rotation to limit how far up/down the camera can look
         Vector3 eulerAngles = rotation.eulerAngles;
-        eulerAngles.x = ClampAngle(eulerAngles.x, maxDownAngle, maxUpAngle);
+        eulerAngles.x = ClampAngle(eulerAngles.x, _maxDownAngle, _maxUpAngle);
         return Quaternion.Euler(eulerAngles);
     }
 
@@ -241,19 +224,19 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         return angle;
     }
 
-
     public void OnJumpInput()
     {
         if (_controller.isGrounded && canJump)
         {
-            velocity.y = maxJumpVelocity;
+            _velocity.y = _maxJumpVelocity;
         }
     }
+
     public void OnJumpInputUp()
     {
-        if (velocity.y > minJumpVelocity)
+        if (_velocity.y > _minJumpVelocity)
         {
-            velocity.y = minJumpVelocity;
+            _velocity.y = _minJumpVelocity;
         }
     }
 
@@ -262,11 +245,11 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         vector.x = _active ? vector.x : -vector.x;
         _controller.Move(transform.TransformDirection(vector) * Time.deltaTime * speed );
 
-        _controller.Move(velocity * Time.deltaTime);
+        _controller.Move(_velocity * Time.deltaTime);
         if (!_controller.isGrounded)
         {
-            velocity.y += gravity * Time.deltaTime;
-            velocity.y = Mathf.Clamp(velocity.y, gravity, Mathf.Infinity);
+            _velocity.y += _gravity * Time.deltaTime;
+            _velocity.y = Mathf.Clamp(_velocity.y, _gravity, Mathf.Infinity);
         }
     }
 
@@ -276,7 +259,6 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
         _camera.SetActive(_active);
     }
 
-
     public void SetOtherActor(PlayerActor actor)
     {
         _otherActor = actor;
@@ -285,7 +267,6 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
     {
         _playerControler = controler;
     }
-
     public void AddEnergy()
     {
         enegry++;
@@ -312,7 +293,6 @@ public class PlayerActor : MonoBehaviour, IEnergyHolder
             }
         }
     }
-
 
     public void SetCanShoot(bool b)
     {

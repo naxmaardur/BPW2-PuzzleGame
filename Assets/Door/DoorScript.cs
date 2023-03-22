@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class DoorScript : MonoBehaviour
 {
-    Animator _animator;
+    private Animator _animator;
     [SerializeField]
-    bool _closedOnActive;
-
-    bool _IsOpen;
+    private bool _closedOnActive;
+    private bool _IsOpen;
     private AudioSource _source;
 
     // Start is called before the first frame update
@@ -17,9 +16,6 @@ public class DoorScript : MonoBehaviour
         _animator = GetComponent<Animator>();
         _source = GetComponent<AudioSource>();
     }
-
-
-
 
     public void SwapActiveState()
     {

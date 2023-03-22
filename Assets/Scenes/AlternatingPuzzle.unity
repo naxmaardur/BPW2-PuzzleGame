@@ -592,13 +592,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9704e7018857b9c44b612b4f23dde9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySwitches:
+  _energySwitches:
   - {fileID: 1089846790}
   - {fileID: 1782081493}
-  targets:
-  - {fileID: 268347415}
-  - {fileID: 443464895}
+  _targets:
   - {fileID: 1860416734}
+  - {fileID: 443464895}
+  - {fileID: 268347415}
   _energyDisplays:
   - {fileID: 110701416}
   overwriteEnergyNeeded: 1
@@ -615,9 +615,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9704e7018857b9c44b612b4f23dde9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySwitches:
+  _energySwitches:
   - {fileID: 1056132427}
-  targets:
+  _targets:
   - {fileID: 2045857060}
   _energyDisplays:
   - {fileID: 1152731387}
@@ -2963,13 +2963,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9704e7018857b9c44b612b4f23dde9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySwitches:
+  _energySwitches:
   - {fileID: 1523872673}
   - {fileID: 691326632}
-  targets:
+  _targets:
+  - {fileID: 1967383572}
   - {fileID: 376707373}
   - {fileID: 1826597487}
-  - {fileID: 1967383572}
   _energyDisplays:
   - {fileID: 1792357899}
   overwriteEnergyNeeded: 1
@@ -2986,9 +2986,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9704e7018857b9c44b612b4f23dde9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySwitches:
+  _energySwitches:
   - {fileID: 1058260689}
-  targets:
+  _targets:
   - {fileID: 68256767}
   _energyDisplays:
   - {fileID: 251561062}
@@ -7005,18 +7005,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9704e7018857b9c44b612b4f23dde9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySwitches:
-  - {fileID: 367438921}
+  _energySwitches:
   - {fileID: 1187456929}
-  targets:
-  - {fileID: 25794288}
-  - {fileID: 771355937}
-  - {fileID: 994360921}
-  - {fileID: 1876567648}
+  - {fileID: 367438921}
+  _targets:
   - {fileID: 869594550}
   - {fileID: 512469331}
   - {fileID: 770808375}
   - {fileID: 1867620180}
+  - {fileID: 25794288}
+  - {fileID: 771355937}
+  - {fileID: 994360921}
+  - {fileID: 1876567648}
   _energyDisplays:
   - {fileID: 1545993452}
   - {fileID: 301174309}
@@ -7049,10 +7049,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9704e7018857b9c44b612b4f23dde9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySwitches:
-  - {fileID: 1872928890}
+  _energySwitches:
   - {fileID: 1694395613}
-  targets:
+  - {fileID: 1872928890}
+  _targets:
   - {fileID: 978754507}
   - {fileID: 664062402}
   _energyDisplays:

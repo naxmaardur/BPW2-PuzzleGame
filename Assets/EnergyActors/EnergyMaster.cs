@@ -5,21 +5,21 @@ using UnityEngine;
 public class EnergyMaster : MonoBehaviour
 {
     [SerializeField]
-    EnergySwitch[] energySwitches;
-    public GameObject[] targets;
-    int totalEnergy;
+    private EnergySwitch[] _energySwitches;
+    [SerializeField]
+    private GameObject[] _targets;
+    private int _totalEnergy;
     [SerializeField]
     private EnergyDisplay[] _energyDisplays;
     public bool overwriteEnergyNeeded;
     public float energyNeededOverwriteValue;
     private AudioSource _source;
 
-
     // Start is called before the first frame update
     void Awake()
     {
         _source = GetComponent<AudioSource>();
-        foreach (EnergySwitch energySwitch in energySwitches)
+        foreach (EnergySwitch energySwitch in _energySwitches)
         {
             energySwitch.OnEnergyChanged += OnEnergyChanged;
         }
@@ -29,23 +29,23 @@ public class EnergyMaster : MonoBehaviour
     {
         if(value > 0)
         {
-            totalEnergy++;
+            _totalEnergy++;
         }
         else
         {
-            totalEnergy--;
+            _totalEnergy--;
         }
         foreach(EnergyDisplay display in _energyDisplays)
         {
-            display.UpdateLights(totalEnergy);
+            display.UpdateLights(_totalEnergy);
         }
-        if (totalEnergy >= energySwitches.Length)
+        if (_totalEnergy >= _energySwitches.Length)
         {
             Activate(true);
             _source.Play();
             return;
         }
-        if(overwriteEnergyNeeded && totalEnergy >= energyNeededOverwriteValue)
+        if(overwriteEnergyNeeded && _totalEnergy >= energyNeededOverwriteValue)
         {
             Activate(true);
             _source.Play();
@@ -54,19 +54,12 @@ public class EnergyMaster : MonoBehaviour
         Activate(false);
     }
 
-
     void Activate(bool b)
     {
         Debug.Log(b);
-        foreach (GameObject target in targets)
+        foreach (GameObject target in _targets)
         {
             target.SendMessage("SetActiveState", b);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
