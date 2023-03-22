@@ -31,8 +31,18 @@ public class LevelTransition : MonoBehaviour
     {
         if (count == 2)
         {
-            SceneManager.LoadScene(_targetSceneIndex);
+            LoadLevel();
         }
     }
 
+
+    public void LoadLevel()
+    {
+        SceneManager.LoadScene(_targetSceneIndex);
+    }
+
+    public void Quit()
+    {
+        Application.Quit(); 
+    }
 }
